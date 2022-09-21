@@ -109,7 +109,7 @@ void mrkSort(int *array,int *indx,int size){
 void destroy(int **a,int *c,int *indx,int n){
     //Delete every row of the triangular array.
     for(int i=0;i<n;i++){
-        delete a[i];
+        delete []a[i];
     }
     //Delete the pointers.
     delete []a;    //Our array of pointers.
