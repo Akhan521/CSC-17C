@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=CurveFit_LinearAlgebra_V1
+PROJECTNAME=Object_Array_With_Abstraction_&_Polymorphism
 
 # Active Configuration
 DEFAULTCONF=Debug
