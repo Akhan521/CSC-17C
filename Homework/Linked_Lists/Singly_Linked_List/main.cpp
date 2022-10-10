@@ -21,7 +21,7 @@ int main(int argc, char** argv) {
     //srand(static_cast<unsigned int>(time(0)));
     
     //Creating and filling our list.
-    LinkedList list(5);
+    LinkedList<int> list(5);
     
     //Printing the list.
     list.prntLst();

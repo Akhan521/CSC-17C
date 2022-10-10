@@ -1,8 +1,8 @@
 /* 
  * File:    main.cpp
  * Author:  Aamir Khan
- * Created: October 9, 2022, 6:10 PM
- * Purpose: Doubly Linked List.
+ * Created: October 9, 2022, 9:05 PM
+ * Purpose: Sorted Linked List.
  */
 
 //System Libraries.
@@ -24,7 +24,7 @@ int main(int argc, char** argv) {
     int n=10;
     
     //Creating and filling our list.
-    LinkedList list(n);
+    LinkedList<int> list(n);
     
     //Printing the list.
     list.prntLst();
@@ -43,6 +43,7 @@ int main(int argc, char** argv) {
     
     //Printing in reverse.
     list.prntRev();
+
     
     //Exit stage right.
     return 0;

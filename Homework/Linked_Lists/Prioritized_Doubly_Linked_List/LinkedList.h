@@ -1,7 +1,7 @@
 /* 
  * File:    LinkedList.h
  * Author:  Aamir Khan
- * Created: October 9, 2022, 9:05 PM
+ * Created: October 9, 2022, 6:10 PM
  */
 
 #ifndef LINKEDLIST_H
@@ -24,21 +24,20 @@ class LinkedList{
         Link *front=NULL;
         //The end of our list.
         Link *end=NULL;
-        //Sorting utility function.
-        void sort();
     public:
-        LinkedList(int);       //Our constructor.
-        ~LinkedList();         //Our destructor.
-        Link *fillLst(int);    //To create and fill a list.
-        void prntLst();        //To print our linked list.
-        void prntRev();        //To print our list in reverse.
-        void dstryLst();       //To destroy our linked list.
-        Link *create(T);       //Create a link with data.
-        void push(T);          //Push a link into its correct place.
-        T pop_front();         //Pop a link from the front.
-        T pop_back();          //Pop a link from the end.
-        int size();            //Returns the size of our list.
-    
+        LinkedList(int);         //Our constructor.
+        ~LinkedList();           //Our destructor.
+        Link *fillLst(int);      //To create and fill a list.
+        void prntLst();          //To print our linked list.
+        void prntRev();          //To print our list in reverse.
+        void dstryLst();         //To destroy our linked list.
+        Link *create(T);         //Create a link with data.
+        void push_front(T);      //Push a link to the front.
+        void push_back(T);       //Push a link to the end.
+        T pop_front();           //Pop a link from the front.
+        T pop_back();            //Pop a link from the end.
+        void find(T);            //Search our list for the 1st 
+                                 //occurrence of a value.
 };
 
 template <class T>
@@ -79,18 +78,17 @@ typename LinkedList<T>::Link *LinkedList<T>::fillLst(int n){
     }
     //We set the last node as our list's end.
     end=temp;
-    //We set the end's prev to the 2nd to last node.
-    end->prev=temp->prev;
     //We set the last node to point to NULL.
     end->next=NULL;
-    //We sort our list.
-    sort();
     //We return the front of the list.
     return front;
 }
 
 template <class T>
 void LinkedList<T>::prntLst(){
+    cout<<endl;
+    int perLine=20; //How many elements to display per line.
+    int count=0;    //To keep count of how many elements we've displayed.
     cout<<"Printing list..."<<endl;
     Link *temp=front;
     //As long as we have a valid node...
@@ -99,12 +97,18 @@ void LinkedList<T>::prntLst(){
         cout<<temp->data<<" ";
         //We advance out pointer.
         temp=temp->next;
+        //If we have 15 elements on a line, we go to the next line.
+        if(count++%perLine==perLine-1)
+            cout<<endl;
     }
-    cout<<endl<<endl;
+    cout<<endl;
 }
 
 template <class T>
 void LinkedList<T>::prntRev(){
+    cout<<endl;
+    int perLine=20; //How many elements to display per line.
+    int count=0;    //To keep count of how many elements we've displayed.
     cout<<"Printing in reverse..."<<endl;
     Link *temp=end;
     //As long as we have a valid node...
@@ -113,8 +117,11 @@ void LinkedList<T>::prntRev(){
         cout<<temp->data<<" ";
         //We go to the previous node.
         temp=temp->prev;
+        //If we have 15 elements on a line, we go to the next line.
+        if(count++%perLine==perLine-1)
+            cout<<endl;
     }
-    cout<<endl<<endl;
+    cout<<endl;
 }
 
 template <class T>
@@ -145,56 +152,40 @@ typename LinkedList<T>::Link *LinkedList<T>::create(T data){
 }
 
 template <class T>
-void LinkedList<T>::push(T data){
-    cout<<"Inserting: "<<data<<endl;
+void LinkedList<T>::push_front(T data){
     //Creating our node.
     Link *node=create(data);
     //If we have no front...
     if(front==NULL){
         front=node; //This is our first node.
-        end=node;   //This is also our last node.
     }
-    //If we have to place our node at the front...
-    else if(node->data<front->data){
-        //We set the front's prev to the new node.
+    else{
+        //We have our current front's prev point to the new node.
         front->prev=node;
-        //We set the new node's next to front.
+        //We have our node point to the current front of our list.
         node->next=front;
-        //Our new node becomes our new front.
+        //We then set our node to be the new front.
         front=node;
     }
-    //If we need to insert the node elsewhere...
+}
+
+template <class T>
+void LinkedList<T>::push_back(T data){
+    //Creating our node.
+    Link *node=create(data);
+    //If we have no front...
+    if(front==NULL){
+        front=node; //This is our first node.
+    }
     else{
-        //We need to find the correct insert position for our node.
-        Link *temp=front;
-        //While the next node is valid and its data is 
-        //less than our new node's data, we advance our pointer.
-        while(temp->next&&temp->next->data<node->data){
-            //Moving to the next node.
-            temp=temp->next;
-        }
-        //We can now insert our new node into our list.
-        //temp holds the node that will come before our new node.
-        //temp->next holds the node that will come after our new node.
-        //We set the new node's next to the node that will come after.
-        node->next=temp->next;
-        //We set the next node's prev to our new node if it's a valid node.
-        if(temp->next)
-            temp->next->prev=node;
-        //We set the current node's next to our new node.
+        //We have to go to the last node:
+        Link *temp=end;
+        //We then insert our new node at the end.
         temp->next=node;
-        //We set our new node's prev to the current node.
+        //We set our new node's prev as our former end.
         node->prev=temp;
-        //If we inserted the node at the end...
-        if(node->data>end->data){
-            //We update our end.
-            end=node;
-        }
-        //NOTE: If we had inserted our node at the front or in between, the end
-        //wouldn't need to be updated. We only have to update our end if we are
-        //inserting our node at the end of our list. In this case, our new node
-        //will become our last node. (This is when its data is larger than the
-        //last node's data).
+        //Mark our new node as our new end.
+        end=node;
     }
 }
 
@@ -270,43 +261,48 @@ T LinkedList<T>::pop_back(){
 }
 
 template <class T>
-int LinkedList<T>::size(){
-    //To hold our size.
-    int count=0;
-    //We loop through our list.
+void LinkedList<T>::find(T val){
     Link *temp=front;
-    while(temp){
-        //We increment our count.
-        count++;
+    //As long as we have a valid node and we haven't found our data...
+    while(temp&&temp->data!=val){
         //We advance our pointer.
         temp=temp->next;
     }
-    //We return our size.
-    return count;
-}
-
-template <class T>
-void LinkedList<T>::sort(){
-    //To use in our outer loop.
-    Link *tmp1=front;
-    //We sort using a nested for loop.
-    for(int i=0;i<size()-1;i++){
-        //To use in our inner loop.
-        Link *tmp2=tmp1->next;
-        //We start from the next node and go through our list.
-        for(int j=i+1;j<size();j++){
-            //If we need to swap our data...
-            if(tmp1->data>tmp2->data){
-                //We swap our data.
-                int temp=tmp1->data;
-                tmp1->data=tmp2->data;
-                tmp2->data=temp;
-            }
-            //We advance our pointer.
-            tmp2=tmp2->next;
+    //If we have a valid node and we've found our data...
+    if(temp&&temp->data==val){
+        //We output that the data was found.
+        cout<<val<<" was found!"<<endl;
+        //temp holds the node with the data we've found.
+        //Note: if the link is already at the front, we do nothing.
+        //If the link is in between our list...
+        if(temp!=front&&temp!=end){
+            //We set the previous node's next to the next node.
+            temp->prev->next=temp->next;
+            //We set the next node's prev to the previous node.
+            temp->next->prev=temp->prev;
+            //We want to bring the current node to the front:
+            temp->next=front; //We set the current node's next to our front.
+            front->prev=temp; //We set our front's prev to the current node.
+            front=temp;       //We set the current node as our new front.
+            front->prev=NULL; //We set its prev to NULL, since it is our front.
         }
-        //We advance our pointer.
-        tmp1=tmp1->next;
+        //If the node we've found is the end of our list...
+        else if(temp==end){
+            //We set the 2nd to last node as our new end.
+            end=end->prev;
+            //We have the last node point to NULL.
+            end->next=NULL;
+            //We want to bring the current node to the front:
+            temp->next=front; //We set the current node's next to our front.
+            front->prev=temp; //We set our front's prev to the current node.
+            front=temp;       //We set the current node as our new front.
+            front->prev=NULL; //We set its prev to NULL, since it is our front.
+        }
+    }
+    //If we didn't find the data...
+    else{
+        //We output that the value wasn't found.
+        cout<<val<<" was NOT found."<<endl;
     }
 }
 
