@@ -1,33 +1,33 @@
 /* 
- * File:   main.cpp
- * Author: Aamir Khan
- * Created on February 15, 2022, 12:40 PM
- * Purpose:  
+ * File:    main.cpp
+ * Author:  Aamir Khan
+ * Created: Month Day, 2022, 12:40 PM
+ * Purpose: 
  */
 
-//System Libraries
-#include <iostream>  //I/O Library
+//System Libraries:
+#include <iostream>  //I/O Library.
 using namespace std;
 
-//User Libraries
+//User Libraries:
 
-//Global Constants
-//Math, Science, Universal, Conversions, High Dimensioned Arrays
+//Global Constants.
+//Math, Science, Universal, Conversions, High Dimensioned Arrays.
 
-//Function Prototypes
+//Function Prototypes:
 
-//Execution Begins Here
+//Execution Begins Here:
 int main(int argc, char** argv) {
-    //Initialize the Random Number Seed
+    //Initialize the Random Number Seed.
     
-    //Declare Variables
+    //Declare Variables.
     
-    //Initialize Variables
+    //Initialize Variables.
     
-    //Map Inputs to Outputs -> Process
+    //Map Inputs to Outputs -> Process.
     
-    //Display Inputs/Outputs
+    //Display Inputs/Outputs.
     
-    //Exit the Program - Cleanup
+    //Exit the Program - Cleanup.
     return 0;
 }
