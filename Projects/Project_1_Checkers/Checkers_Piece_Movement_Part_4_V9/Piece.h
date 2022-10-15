@@ -1,8 +1,8 @@
 /* 
  * File:    Piece.h
  * Author:  Aamir Khan
- * Created: Oct. 12, 2022, 1:50 PM
- * Purpose: Version 8 - Piece Movement Part 3.          
+ * Created: Oct. 12, 2022, 10:50 PM
+ * Purpose: Version 9 - Piece Movement Part 4.          
  */
 
 #ifndef PIECE_H
@@ -20,7 +20,7 @@ class Piece{
         //Overloaded constructor.
         Piece(string,int,int);
         //Return our piece's position.
-        pair<int,int> getPos(){return pos;}
+        pair<int,int> &getPos(){return pos;}
         //Set our piece's position.
         void setPos(int,int);
         //Get our piece.

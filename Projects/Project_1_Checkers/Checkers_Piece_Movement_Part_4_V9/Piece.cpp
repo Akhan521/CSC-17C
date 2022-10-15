@@ -1,8 +1,8 @@
 /* 
  * File:    Piece.cpp
  * Author:  Aamir Khan
- * Created: Oct. 12, 2022, 1:50 PM
- * Purpose: Version 8 - Piece Movement Part 3.          
+ * Created: Oct. 12, 2022, 10:50 PM
+ * Purpose: Version 9 - Piece Movement Part 4.         
  */
 
 #include "Piece.h"

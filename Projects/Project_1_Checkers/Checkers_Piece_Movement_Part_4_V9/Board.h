@@ -1,8 +1,8 @@
 /* 
  * File:    Board.h
  * Author:  Aamir Khan
- * Created: Oct. 12, 2022, 1:50 PM
- * Purpose: Version 8 - Piece Movement Part 3.          
+ * Created: Oct. 12, 2022, 10:50 PM
+ * Purpose: Version 9 - Piece Movement Part 4.          
  */
 
 #ifndef BOARD_H
@@ -27,10 +27,14 @@ class Board{
         void putPieces();
         //To determine whether a piece can move into at least 1 square.
         bool canMove(string,pair<int,int>);
-        //To determine whether we can capture a piece or not.
-        bool canCapture(string,pair<int,int>,pair<int,int> &);
+        //To determine whether we can capture a piece or not only.
+        bool canCapture(string,pair<int,int>);
+        //To determine whether we can capture a piece or not, store the 
+        //position of the captured piece, and store whether we had the 
+        //option to choose which piece to capture.
+        bool canCapture(string,pair<int,int>,pair<int,int> &,bool &);
         //To capture a piece. (Used together with the function above.)
-        void capture(string,pair<int,int>,pair<int,int>);
+        void capture(string,pair<int,int>,pair<int,int>,pair<int,int>);
     public:
         //Our constructor.
         Board();
