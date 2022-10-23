@@ -94,7 +94,7 @@ void Board::putPieces(){
             else if(row==7||row==8){
                 //We only place pieces on valid squares.
                 if(isVldSquare(row,col)){
-                    //(*itr)->setPiece(" B "); //Black piece.
+                    (*itr)->setPiece(" B "); //Black piece.
                     (*itr)->setPos(row,col); //Its position.
                 }
             }
