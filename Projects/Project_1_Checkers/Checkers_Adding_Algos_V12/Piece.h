@@ -1,8 +1,8 @@
 /* 
  * File:    Piece.h
  * Author:  Aamir Khan
- * Created: Oct. 13, 2022, 7:10 PM
- * Purpose: Version 10 - Piece Movement Part 5.           
+ * Created: Oct. 15, 2022, 7:05 PM
+ * Purpose: Version 12 - Adding a few algorithms into my game.           
  */
 
 #ifndef PIECE_H

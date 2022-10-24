@@ -1,8 +1,8 @@
 /* 
  * File:    Player.h
  * Author:  Aamir Khan
- * Created: Oct. 15, 2022, 2:45 PM
- * Purpose: Version 11 - Adding players + Captured pieces count. 
+ * Created: Oct. 15, 2022, 7:05 PM
+ * Purpose: Version 12 - Adding a few algorithms into my game. 
  */
 
 #ifndef PLAYER_H

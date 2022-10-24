@@ -1,24 +1,24 @@
 /* 
  * File:    Piece.cpp
  * Author:  Aamir Khan
- * Created: Oct. 13, 2022, 7:10 PM
- * Purpose: Version 10 - Piece Movement Part 5.          
+ * Created: Oct. 16, 2022, 6:55 PM
+ * Purpose: Version 13 - Starting my game.           
  */
 
 #include "Piece.h"
 
-//Our constructor.
+/** \brief Our constructor. */
 Piece::Piece(string pce,int x,int y){
     piece=pce;         //Setting the piece as red or black.
     this->setPos(x,y); //Setting its position.
 }
 
-//Setter for postition.
+/** \brief Setter for position. */
 void Piece::setPos(int x,int y){
     pos=make_pair(x,y);
 }
 
-//Setter for piece description.
+/** \brief Setter for piece description. */
 void Piece::setPiece(string pce){
     piece=pce;
 }

@@ -1,13 +1,13 @@
 /* 
  * File:    Board.cpp
  * Author:  Aamir Khan
- * Created: Oct. 13, 2022, 7:10 PM
- * Purpose: Version 10 - Piece Movement Part 5.          
+ * Created: Oct. 16, 2022, 6:55 PM
+ * Purpose: Version 13 - Starting my game.          
  */
 
 #include "Board.h"
 
-//Our constructor.
+/** \brief Our constructor. */
 Board::Board(){
     //Creates an empty checkers board.
     this->fillBrd();
@@ -15,7 +15,7 @@ Board::Board(){
     this->putPieces();
 }
 
-//Our destructor.
+/** \brief Our destructor. */
 Board::~Board(){
     //We declare an iterator to span our 2-D list.
     list<list<Piece *>>::iterator it;
@@ -31,7 +31,7 @@ Board::~Board(){
     }
 }
 
-//Fills our board.
+/** \brief Fills our board. */
 void Board::fillBrd(){
     //Giving our board 8 rows and 8 columns.
     board=list<list<Piece *>>(DIM,list<Piece *>(DIM));
@@ -60,7 +60,7 @@ void Board::fillBrd(){
     }
 }
 
-//Checks whether we have a valid square.
+/** \brief Checks whether we have a valid square. */
 bool Board::isVldSquare(int r,int c){
     //The row and column must be within bounds of our board.
     //It must also not be marked with an X.
@@ -70,7 +70,7 @@ bool Board::isVldSquare(int r,int c){
     return (r>0&&r<=DIM&&c>0&&c<=DIM&&(r+c)%2);
 }
 
-//Places pieces onto our board.
+/** \brief Places pieces onto our board. */
 void Board::putPieces(){
     //To keep count of what row and column we're on.
     int row,col;
@@ -102,7 +102,7 @@ void Board::putPieces(){
     }
 }
 
-//Displays our board.
+/** \brief Displays our board. */
 void Board::dsplyBrd(){
     cout<<endl;
     //To keep count of what row we're on.
@@ -127,7 +127,7 @@ void Board::dsplyBrd(){
     cout<<"    1   2   3   4   5   6   7   8"<<endl;
 }
 
-//Jumps to a piece in our board.
+/** \brief Jumps to a piece in our board. */
 list<Piece *>::iterator Board::jumpTo(int r,int c){
     //To keep count of what row and column we're on.
     int row,col;
@@ -160,11 +160,12 @@ list<Piece *>::iterator Board::jumpTo(int r,int c){
     return board.end()->end(); //The end of the last list in our board.
 }
 
-//Moves a piece on our board. We pass in our piece (Red/Black).
-//We need to pass our piece in, so that we can ensure we only
-//choose to move a piece that's ours. We also pass in a map that will
-//be used to keep count of how many pieces we've captured. The key for the
-//map will be our piece, and the value will be how many pieces we've captured.
+/**Moves a piece on our board. We pass in our piece (Red/Black).
+ * We need to pass our piece in, so that we can ensure we only
+ * choose to move a piece that's ours. We also pass in a map that will
+ * be used to keep count of how many pieces we've captured. The key for the
+ * map will be our piece, and the value will be how many pieces we've captured.
+ */
 void Board::move(string ourPiece,map<string,int> &captPces){
     //Storing our opponent's piece.
     string opptPiece=ourPiece==" B "?" R ":" B ";
@@ -721,8 +722,9 @@ void Board::move(string ourPiece,map<string,int> &captPces){
     }
 }
 
-//To determine whether we can move a piece. The first parameter is our piece.
-//The second parameter is the position of our piece. We check diagonals.
+/**To determine whether we can move a piece. The first parameter is our piece.
+ * The second parameter is the position of our piece. We check diagonals.
+ */
 bool Board::canMove(string ourPiece,pair<int,int> pos){
     int x=pos.first;  //The row of our piece.
     int y=pos.second; //The col of our piece.
@@ -795,9 +797,10 @@ bool Board::canMove(string ourPiece,pair<int,int> pos){
     return canMove;
 }
 
-//To determine whether we can move a King piece or not. In this function,
-//we check all diagonals to see if there is at least one square that we 
-//can move our King piece into.
+/**To determine whether we can move a King piece or not. In this function,
+ * we check all diagonals to see if there is at least one square that we 
+ * can move our King piece into.
+ */
 bool Board::canMoveKing(pair<int,int> pos){
     int x=pos.first;  //The row of our piece.
     int y=pos.second; //The col of our piece.
@@ -859,8 +862,9 @@ bool Board::canMoveKing(pair<int,int> pos){
     return cnMveUprLeft||cnMveUprRight||cnMveLwrLeft||cnMveLwrRight;
 }
 
-//To determine whether we can capture a piece or not. The first parameter is our piece.
-//The second parameter is the position of our piece. 
+/**To determine whether we can capture a piece or not. The first parameter is our piece.
+ * The second parameter is the position of our piece. 
+ */
 bool Board::canCapture(string ourPiece,pair<int,int> pos){
     bool canCaptLeft=false;  //To hold whether we can capture from the left.
     bool canCaptRight=false; //To hold whether we can capture from the right.
@@ -948,8 +952,9 @@ bool Board::canCapture(string ourPiece,pair<int,int> pos){
     return canCaptLeft||canCaptRight;
 }
 
-//To determine whether we can capture a piece using a King piece. This function
-//should check all diagonals.
+/**To determine whether we can capture a piece using a King piece. This function
+ * should check all diagonals.
+ */
 bool Board::canCaptWithKng(string ourPiece,pair<int,int> pos){
     int x=pos.first;            //The row of our piece.
     int y=pos.second;           //The col of our piece.
@@ -1115,11 +1120,12 @@ bool Board::canCaptWithKng(string ourPiece,pair<int,int> pos){
     return canCaptUprLeft||canCaptUprRight||canCaptLwrLeft||canCaptLwrRight; 
 }
 
-//To determine whether we can capture a piece or not. The first parameter is our piece.
-//The second parameter is the position of our piece. The third parameter is used to 
-//hold the position of a piece we can capture. The 4th parameter is used to hold 
-//whether we had the option to choose what piece to capture. If we were able to 
-//choose what piece to capture, the 4th parameter is set to true. 
+/**To determine whether we can capture a piece or not. The first parameter is our piece.
+ * The second parameter is the position of our piece. The third parameter is used to 
+ * hold the position of a piece we can capture. The 4th parameter is used to hold 
+ * whether we had the option to choose what piece to capture. If we were able to 
+ * choose what piece to capture, the 4th parameter is set to true. 
+ */
 bool Board::canCapture(string ourPiece,pair<int,int> pos,pair<int,int> &cap,bool &chosen){
     bool canCaptLeft=false;     //To hold whether we can capture from the left.
     bool canCaptRight=false;    //To hold whether we can capture from the right.
@@ -1240,11 +1246,12 @@ bool Board::canCapture(string ourPiece,pair<int,int> pos,pair<int,int> &cap,bool
     return canCaptLeft||canCaptRight;
 }
 
-//To determine whether we can capture a piece or not. The first parameter is our piece.
-//The second parameter is the position of our piece. The third parameter is used to 
-//hold the position of a piece we can capture. The 4th parameter is used to hold 
-//whether we had the option to choose what piece to capture. If we were able to 
-//choose what piece to capture, the 4th parameter is set to true.
+/**To determine whether we can capture a piece or not. The first parameter is our piece.
+ * The second parameter is the position of our piece. The third parameter is used to 
+ * hold the position of a piece we can capture. The 4th parameter is used to hold 
+ * whether we had the option to choose what piece to capture. If we were able to 
+ * choose what piece to capture, the 4th parameter is set to true.
+ */
 bool Board::canCaptWithKng(string ourPiece,pair<int,int> pos,pair<int,int> &cap,bool &chosen){
     int x=pos.first;            //The row of our piece.
     int y=pos.second;           //The col of our piece.
@@ -1451,10 +1458,11 @@ bool Board::canCaptWithKng(string ourPiece,pair<int,int> pos,pair<int,int> &cap,
     return canCaptUprLeft||canCaptUprRight||canCaptLwrLeft||canCaptLwrRight;
 }
 
-//To capture a piece. The first parameter is our piece. (Red or Black.)
-//The second parameter is the current position our piece. The third parameter 
-//is the position our piece will be in after it has jumped the opponent piece.
-//The fourth parameter is the position of the piece we'll be capturing. 
+/**To capture a piece. The first parameter is our piece. (Red or Black.)
+ * The second parameter is the current position our piece. The third parameter 
+ * is the position our piece will be in after it has jumped the opponent piece.
+ * The fourth parameter is the position of the piece we'll be capturing. 
+ */
 void Board::capture(string ourPiece,pair<int,int> pos,pair<int,int> newPos,pair<int,int> captured){
     //We begin by jumping to our current square to set it as an empty piece, since we're leaving it.
     list<Piece *>::iterator itr=jumpTo(pos.first,pos.second);
@@ -1484,8 +1492,9 @@ void Board::capture(string ourPiece,pair<int,int> pos,pair<int,int> newPos,pair<
     }
 }
 
-//To display all of our King pieces. We input our piece and use a stack to 
-//output all of our King pieces.
+/**To display all of our King pieces. We input our piece and use a stack to 
+ * output all of our King pieces.
+ */
 void Board::dsplyKings(string ourPiece){
     //To hold the positions of our King pieces.
     stack<pair<int,int>> kngPos;
@@ -1522,8 +1531,9 @@ void Board::dsplyKings(string ourPiece){
         cout<<endl;
 }
 
-//This function will test to see if we have at least 1 legal move to make. If
-//there are no legal moves that we can make, then we have to forfeit the game.
+/**This function will test to see if we have at least 1 legal move to make. If
+ * there are no legal moves that we can make, then we have to forfeit the game.
+ */
 bool Board::willForfeit(string ourPiece){
     //To hold whether we have to forfeit or not.
     bool willForfeit=true;
