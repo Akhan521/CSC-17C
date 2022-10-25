@@ -1,8 +1,8 @@
 /* 
  * File:    Board.cpp
  * Author:  Aamir Khan
- * Created: Oct. 11, 2022, 2:50 PM
- * Purpose: Version 6 - Piece Movement Part 1.          
+ * Created: Oct. 12, 2022, 12:55 PM
+ * Purpose: Version 7 - Piece Movement Part 2.           
  */
 
 #include "Board.h"
