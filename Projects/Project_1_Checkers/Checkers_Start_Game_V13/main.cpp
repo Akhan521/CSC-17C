@@ -50,9 +50,12 @@ int main(int argc, char** argv) {
     
     //Setting pieces and the board for both players.
     plyr1->setPiece(" B ");  //Player 1 has black as their color.
+    cout<<plyr1->getName()<<"'s pieces are: "<<(plyr1->getPiece()==" B "?"Black\n":"Red\n");
     plyr2->setPiece(" R ");  //Player 2 has red as their color.
+    cout<<plyr2->getName()<<"'s pieces are: "<<(plyr2->getPiece()==" B "?"Black\n":"Red\n");
     plyr1->setBoard(board);  //Setting player 1's board.
     plyr2->setBoard(board);  //Setting player 2's board.
+    cout<<endl;
     
     //Declaring a map to keep count of how many pieces each player has captured.
     map<string,int> captPces;

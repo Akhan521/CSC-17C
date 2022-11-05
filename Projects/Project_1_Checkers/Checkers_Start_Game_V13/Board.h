@@ -44,13 +44,6 @@ class Board{
          * @return True/False depending on whether we can move our King piece.
          */
         bool canMoveKing(pair<int,int>);
-        /** \brief To determine whether we can capture a piece or not only. 
-         * 
-         * @param ourPiece Our piece.
-         * @param pos Our piece's position.
-         * @return True/False depending on whether we can capture a piece.
-         */
-        bool canCapture(string,pair<int,int>);
         /** \brief To determine whether we can capture a piece or not. 
          * 
          * We also store the position of the captured piece and store 
@@ -62,13 +55,6 @@ class Board{
          * @return True/False depending on whether we can capture a piece.
          */
         bool canCapture(string,pair<int,int>,pair<int,int> &,bool &);
-        /** \brief To determine whether we can capture a piece with a King piece. 
-         * 
-         * @param ourPiece Our piece.
-         * @param pos Our piece's position.
-         * @return True/False depending on whether we can capture a piece with our King piece.
-         */
-        bool canCaptWithKng(string,pair<int,int>);
         /** \brief To determine whether we can capture a piece with our King piece. 
          * 
          * We also store the position of the captured piece and store whether 

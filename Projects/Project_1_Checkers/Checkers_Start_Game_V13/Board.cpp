@@ -195,6 +195,10 @@ void Board::move(string ourPiece,map<string,int> &captPces){
         list<Piece *>::iterator itr;
         //To hold whether we had the option to choose what piece to capture.
         bool chosen;
+        //To hold whether we can move a piece or not.
+        bool canMove; 
+        //To hold whether we can capture a piece or not.
+        bool canCapt; 
         //We keep prompting the user if they've chosen an invalid square...
         while(!isVldSquare(x1,y1)){
             //We need to make sure that the piece we choose to move is our piece.
@@ -227,8 +231,6 @@ void Board::move(string ourPiece,map<string,int> &captPces){
             //There must be at least 1 square that our piece can move into
             //for it to be considered a valid piece for us to choose.
             //We call the canMove() function, passing our piece and its position.
-            bool canMove; //To hold whether we can move a piece or not.
-            bool canCapt; //To hold whether we can capture a piece or not.
             //If we have a King piece...
             if((*itr)->getKingStatus()){
                 //Checking to see if the King piece can move.
@@ -267,8 +269,6 @@ void Board::move(string ourPiece,map<string,int> &captPces){
                 if(!isVldSquare(x2,y2))
                     cout<<"That is an invalid square!\n";
                 else{
-                    //To hold whether we can capture a piece with our King piece or not.
-                    bool canCapt=this->canCaptWithKng(ourPiece,make_pair(x1,y1));
                     //If a piece can't be captured, we need to make sure that an 
                     //appropriate square is chosen that is directly to the left/right.
                     if(!canCapt){
@@ -286,7 +286,7 @@ void Board::move(string ourPiece,map<string,int> &captPces){
                     else{
                         //If we're capturing a piece, we need to make sure that the
                         //square we choose is directly after the piece that we'll be capturing.
-                        while(((x2!=x1-2&&x2!=x1+2)||(y2!=y1-2&&y2!=y1+2))){
+                        while((x2!=capPos.first-1&&x2!=capPos.first+1)||(y2!=capPos.second-1&&y2!=capPos.second+1)){
                             //We output a message and reprompt the user.
                             cout<<"\nYou have to jump into the square after the piece \n";
                             cout<<"you'll be capturing. The square must be valid. \n";
@@ -315,8 +315,6 @@ void Board::move(string ourPiece,map<string,int> &captPces){
                     if(!isVldSquare(x2,y2))
                         cout<<"That is an invalid square!\n";
                     else{
-                        //To hold whether we can capture a piece or not.
-                        bool canCapt=this->canCapture(ourPiece,make_pair(x1,y1));
                         //If a piece can't be captured, we need to make sure that an 
                         //appropriate square is chosen that is directly to the left/right.
                         if(!canCapt){
@@ -336,7 +334,7 @@ void Board::move(string ourPiece,map<string,int> &captPces){
                         else{
                             //We need to make sure that the square we choose is directly
                             //after the piece that we'll be capturing.
-                            while(((x2<x1||x2!=x1+2)||(y2!=y1-2&&y2!=y1+2))){
+                            while(x2!=capPos.first+1||(y2!=capPos.second-1&&y2!=capPos.second+1)){
                                 //We output a message and reprompt the user.
                                 cout<<"\nYou have to jump into the square after the piece \n";
                                 cout<<"you'll be capturing. The square must be valid. \n";
@@ -363,8 +361,6 @@ void Board::move(string ourPiece,map<string,int> &captPces){
                     if(!isVldSquare(x2,y2))
                         cout<<"That is an invalid square!\n";
                     else{
-                        //To hold whether we can capture a piece or not.
-                        bool canCapt=this->canCapture(ourPiece,make_pair(x1,y1));
                         //If a piece can't be captured, we need to make sure that an 
                         //appropriate square is chosen that is directly to the left/right.
                         if(!canCapt){
@@ -384,7 +380,7 @@ void Board::move(string ourPiece,map<string,int> &captPces){
                         else{
                             //We need to make sure that the square we choose is directly
                             //after the piece that we'll be capturing.
-                            while(((x2>x1||x2!=x1-2)||(y2!=y1-2&&y2!=y1+2))){
+                            while(x2!=capPos.first-1||(y2!=capPos.second-1&&y2!=capPos.second+1)){
                                 //We output a message and reprompt the user.
                                 cout<<"\nYou have to jump into the square after the piece \n";
                                 cout<<"you'll be capturing. The square must be valid. \n";
@@ -409,18 +405,7 @@ void Board::move(string ourPiece,map<string,int> &captPces){
         //If we have a King piece...
         if(isKing){
             //If we can capture a piece with our King piece...
-            if(canCaptWithKng(ourPiece,make_pair(x1,y1))){
-                //If we have already chosen what piece to capture.
-                if(chosen){
-                    //As long as we choose a square that isn't after the piece we already chose to capture...
-                    while((x2!=capPos.first+1&&x2!=capPos.first-1)||(y2!=capPos.second-1&&y2!=capPos.second+1)){
-                        cout<<"\nYou have already chosen what piece to capture."<<endl;
-                        cout<<"Make sure you jump into the square that's after"<<endl;
-                        cout<<"the piece you chose to capture..."<<endl;
-                        cout<<"Where would you like to move your piece? (Row Column)\n";
-                        cin>>x2>>y2;
-                    }
-                }
+            if(canCapt){
                 //We go ahead and capture it.
                 capture(ourPiece,make_pair(x1,y1),make_pair(x2,y2),capPos);
                 //Since we've captured a piece, we increment our captured pieces count.
@@ -430,7 +415,7 @@ void Board::move(string ourPiece,map<string,int> &captPces){
                 int tryX=x2,tryY=y2;
                 while(canCaptWithKng(ourPiece,make_pair(tryX,tryY),capPos,chosen)){
                     dsplyBrd(); //Displaying our board.
-                    cout<<"\nYou can still capture a piece. "
+                    cout<<"\nYou can still capture a piece.\n"
                         <<"Make sure to capture all possible pieces..."<<endl;
                     //We keep prompting the user if they've chosen an invalid square...
                     //We want them to choose the square they'll be jumping to, after
@@ -446,29 +431,22 @@ void Board::move(string ourPiece,map<string,int> &captPces){
                         if(!isVldSquare(x2,y2))
                             cout<<"That is an invalid square!\n";
                         else{
-                            //If we have already chosen what piece to capture...
-                            if(chosen){
-                                //As long as we choose a square that isn't after the piece we already chose to capture...
-                                while((x2!=capPos.first+1&&x2!=capPos.first-1)||(y2!=capPos.second-1&&y2!=capPos.second+1)){
-                                    cout<<"\nYou have already chosen what piece to capture."<<endl;
-                                    cout<<"Make sure you jump into the square that's after"<<endl;
-                                    cout<<"the piece you chose to capture..."<<endl;
+                            while(x2!=capPos.first-1&&x2!=capPos.first+1||(y2!=capPos.second-1&&y2!=capPos.second+1)){
+                                    //If we have already chosen what piece to capture...
+                                    if(chosen){
+                                        cout<<"\nYou have already chosen what piece to capture."<<endl;
+                                        cout<<"Make sure you jump into the square that's after"<<endl;
+                                        cout<<"the piece you chose to capture..."<<endl;
+                                    }
+                                    //If we didn't choose what piece to capture...
+                                    else{
+                                        //We output a message and reprompt the user.
+                                        cout<<"\nYou have to jump into the square after the piece \n";
+                                        cout<<"you'll be capturing. The square must be valid. \n";         
+                                    }
                                     cout<<"Where would you like to move your piece? (Row Column)\n";
                                     cin>>x2>>y2;
                                 }
-                            }
-                            //If we didn't choose what piece to capture...
-                            else{
-                                //We need to make sure that the square we choose is directly
-                                //after the piece that we'll be capturing.
-                                while((x2!=tryX-2&&x2!=tryX+2)||(y2!=tryY-2&&y2!=tryY+2)){
-                                    //We output a message and reprompt the user.
-                                    cout<<"\nYou have to jump into the square after the piece \n";
-                                    cout<<"you'll be capturing. The square must be valid. \n";
-                                    cout<<"Where would you like to move your piece? (Row Column)\n";
-                                    cin>>x2>>y2;
-                                }
-                            }
                         }
                         //We jump to the square on our board that we chose.
                         itr=jumpTo(x2,y2);
@@ -513,30 +491,7 @@ void Board::move(string ourPiece,map<string,int> &captPces){
         //If we don't have a King piece...
         else{
             //If we can capture a piece...
-            if(canCapture(ourPiece,make_pair(x1,y1))){
-                //If we've already chosen what piece to capture...
-                if(chosen){
-                    if(ourPiece==" R "){
-                        //As long as we choose a square that isn't after the piece we chose to capture...
-                        while(x2!=capPos.first+1||(y2!=capPos.second-1&&y2!=capPos.second+1)){
-                            cout<<"\nYou have already chosen what piece to capture."<<endl;
-                            cout<<"Make sure you jump into the square that's after"<<endl;
-                            cout<<"the piece you chose to capture..."<<endl;
-                            cout<<"Where would you like to move your piece? (Row Column)\n";
-                            cin>>x2>>y2;
-                        }
-                    }
-                    else if(ourPiece==" B "){
-                        //As long as we choose a square that isn't after the piece we chose to capture...
-                        while(x2!=capPos.first-1||(y2!=capPos.second-1&&y2!=capPos.second+1)){
-                            cout<<"\nYou have already chosen what piece to capture."<<endl;
-                            cout<<"Make sure you jump into the square that's after"<<endl;
-                            cout<<"the piece you chose to capture..."<<endl;
-                            cout<<"Where would you like to move your piece? (Row Column)\n";
-                            cin>>x2>>y2;
-                        }
-                    }
-                }
+            if(canCapt){
                 //We go ahead and capture it.
                 capture(ourPiece,make_pair(x1,y1),make_pair(x2,y2),capPos);
                 //Since we've captured a piece, we increment our captured pieces count.
@@ -563,7 +518,7 @@ void Board::move(string ourPiece,map<string,int> &captPces){
                 int tryX=x2,tryY=y2;
                 while(canCapture(ourPiece,make_pair(tryX,tryY),capPos,chosen)){
                     dsplyBrd(); //Displaying our board.
-                    cout<<"\nYou can still capture a piece. "
+                    cout<<"\nYou can still capture a piece.\n"
                         <<"Make sure to capture all possible pieces..."<<endl;
                     //We keep prompting the user if they've chosen an invalid square...
                     //We want them to choose the square they'll be jumping to, after
@@ -581,28 +536,21 @@ void Board::move(string ourPiece,map<string,int> &captPces){
                             if(!isVldSquare(x2,y2))
                                 cout<<"That is an invalid square!\n";
                             else{
-                                //If we have already chosen what piece to capture...
-                                if(chosen){
-                                    //As long as we choose a square that isn't after the piece we chose to capture...
-                                    while(x2!=capPos.first+1||(y2!=capPos.second-1&&y2!=capPos.second+1)){
+                                while(x2!=capPos.first+1||(y2!=capPos.second-1&&y2!=capPos.second+1)){
+                                    //If we have already chosen what piece to capture...
+                                    if(chosen){
                                         cout<<"\nYou have already chosen what piece to capture."<<endl;
                                         cout<<"Make sure you jump into the square that's after"<<endl;
                                         cout<<"the piece you chose to capture..."<<endl;
-                                        cout<<"Where would you like to move your piece? (Row Column)\n";
-                                        cin>>x2>>y2;
                                     }
-                                }
-                                //If we didn't choose what piece to capture...
-                                else{
-                                //We need to make sure that the square we choose is directly
-                                    //after the piece that we'll be capturing.
-                                    while(((x2<tryX||x2!=tryX+2)||(y2!=tryY-2&&y2!=tryY+2))){
+                                    //If we didn't choose what piece to capture...
+                                    else{
                                         //We output a message and reprompt the user.
                                         cout<<"\nYou have to jump into the square after the piece \n";
-                                        cout<<"you'll be capturing. The square must be valid. \n";
-                                        cout<<"Where would you like to move your piece? (Row Column)\n";
-                                        cin>>x2>>y2;
+                                        cout<<"you'll be capturing. The square must be valid. \n";         
                                     }
+                                    cout<<"Where would you like to move your piece? (Row Column)\n";
+                                    cin>>x2>>y2;
                                 }
                             }
                             //We jump to where we'd like to move our piece.
@@ -623,28 +571,21 @@ void Board::move(string ourPiece,map<string,int> &captPces){
                             if(!isVldSquare(x2,y2))
                                 cout<<"That is an invalid square!\n";
                             else{
-                                //If we have already chosen what piece to capture...
-                                if(chosen){
-                                    //As long as we choose a square that isn't after the piece we chose to capture...
-                                    while(x2!=capPos.first-1||(y2!=capPos.second-1&&y2!=capPos.second+1)){
+                                while(x2!=capPos.first-1||(y2!=capPos.second-1&&y2!=capPos.second+1)){
+                                    //If we have already chosen what piece to capture...
+                                    if(chosen){
                                         cout<<"\nYou have already chosen what piece to capture."<<endl;
                                         cout<<"Make sure you jump into the square that's after"<<endl;
                                         cout<<"the piece you chose to capture..."<<endl;
-                                        cout<<"Where would you like to move your piece? (Row Column)\n";
-                                        cin>>x2>>y2;
                                     }
-                                }
-                                //If we didn't choose what piece to capture...
-                                else{
-                                    //We need to make sure that the square we choose is directly
-                                    //after the piece that we'll be capturing.
-                                    while(((x2>tryX||x2!=tryX-2)||(y2!=tryY-2&&y2!=tryY+2))){
+                                    //If we didn't choose what piece to capture...
+                                    else{
                                         //We output a message and reprompt the user.
                                         cout<<"\nYou have to jump into the square after the piece \n";
-                                        cout<<"you'll be capturing. The square must be valid. \n";
-                                        cout<<"Where would you like to move your piece? (Row Column)\n";
-                                        cin>>x2>>y2;
+                                        cout<<"you'll be capturing. The square must be valid. \n";         
                                     }
+                                    cout<<"Where would you like to move your piece? (Row Column)\n";
+                                    cin>>x2>>y2;
                                 }
                             }
                             //We jump to where we'd like to move our piece.
@@ -863,264 +804,6 @@ bool Board::canMoveKing(pair<int,int> pos){
 }
 
 /**To determine whether we can capture a piece or not. The first parameter is our piece.
- * The second parameter is the position of our piece. 
- */
-bool Board::canCapture(string ourPiece,pair<int,int> pos){
-    bool canCaptLeft=false;  //To hold whether we can capture from the left.
-    bool canCaptRight=false; //To hold whether we can capture from the right.
-    int x=pos.first;         //The row of our piece.
-    int y=pos.second;        //The col of our piece.
-    //If our piece is black...
-    if(ourPiece==" B "){
-        //If the upper left diagonal is a valid square:
-        if(isVldSquare(x-1,y-1)){
-            //We want to check to see if the piece is a red piece.
-            list<Piece *>::iterator uprLeft=jumpTo(x-1,y-1);
-            //If it is a piece that we can possibly capture...
-            if((*uprLeft)->getPiece()==" R "){
-                //We check to see if we can jump the piece.
-                //If the square past it is a valid square...
-                if(isVldSquare(x-2,y-2)){
-                    //We check to see if the square is empty.
-                    list<Piece *>::iterator itr=jumpTo(x-2,y-2);
-                    //If it's empty, we can capture the red piece.
-                    if((*itr)->getPiece()=="   "){
-                        canCaptLeft=true;
-                    }
-                }
-            }
-        }
-        //If the upper right diagonal is a valid square:
-        if(isVldSquare(x-1,y+1)){
-            //We want to check to see if the piece is a red piece.
-            list<Piece *>::iterator uprRight=jumpTo(x-1,y+1);
-            //If it is a piece that we can possibly capture...
-            if((*uprRight)->getPiece()==" R "){
-                //We check to see if we can jump the piece.
-                //If the square past it is a valid square...
-                if(isVldSquare(x-2,y+2)){
-                    //We check to see if the square is empty.
-                    list<Piece *>::iterator itr=jumpTo(x-2,y+2);
-                    //If it's empty, we can capture the red piece.
-                    if((*itr)->getPiece()=="   "){
-                        canCaptRight=true;
-                    }
-                }
-            }
-        }
-    }
-    //If our piece is red...
-    else if(ourPiece==" R "){
-        //If the lower left diagonal is a valid square:
-        if(isVldSquare(x+1,y-1)){
-            //We want to check to see if the piece is a black piece.
-            list<Piece *>::iterator lwrLeft=jumpTo(x+1,y-1);
-            //If it is a piece that we can possibly capture...
-            if((*lwrLeft)->getPiece()==" B "){
-                //We check to see if we can jump the piece.
-                //If the square past it is a valid square...
-                if(isVldSquare(x+2,y-2)){
-                    //We check to see if the square is empty.
-                    list<Piece *>::iterator itr=jumpTo(x+2,y-2);
-                    //If it's empty, we can capture the black piece.
-                    if((*itr)->getPiece()=="   "){
-                        canCaptLeft=true;
-                    }
-                }
-            }
-        }
-        //If the lower right diagonal is a valid square:
-        if(isVldSquare(x+1,y+1)){
-            //We want to check to see if the piece is a black piece.
-            list<Piece *>::iterator lwrRight=jumpTo(x+1,y+1);
-            //If it is a piece that we can possibly capture...
-            if((*lwrRight)->getPiece()==" B "){
-                //We check to see if we can jump the piece.
-                //If the square past it is a valid square...
-                if(isVldSquare(x+2,y+2)){
-                    //We check to see if the square is empty.
-                    list<Piece *>::iterator itr=jumpTo(x+2,y+2);
-                    //If it's empty, we can capture the black piece.
-                    if((*itr)->getPiece()=="   "){
-                        canCaptRight=true;
-                    }
-                }
-            }
-        }
-    }
-    //Returning whether we can capture from the left or the right.
-    return canCaptLeft||canCaptRight;
-}
-
-/**To determine whether we can capture a piece using a King piece. This function
- * should check all diagonals.
- */
-bool Board::canCaptWithKng(string ourPiece,pair<int,int> pos){
-    int x=pos.first;            //The row of our piece.
-    int y=pos.second;           //The col of our piece.
-    bool canCaptUprLeft=false;  //To hold whether we can capture from the upper left.
-    bool canCaptUprRight=false; //To hold whether we can capture from the upper right.
-    bool canCaptLwrLeft=false;  //To hold whether we can capture from the lower left.
-    bool canCaptLwrRight=false; //To hold whether we can capture from the lower right.
-    //If our piece is black...
-    if(ourPiece==" B "){
-        //We need to check the upper left and right diagonals.
-        //If the upper left diagonal is a valid square:
-        if(isVldSquare(x-1,y-1)){
-            //We want to check to see if the piece is a red piece.
-            list<Piece *>::iterator uprLeft=jumpTo(x-1,y-1);
-            //If it is a piece that we can possibly capture...
-            if((*uprLeft)->getPiece()==" R "){
-                //We check to see if we can jump the piece.
-                //If the square past it is a valid square...
-                if(isVldSquare(x-2,y-2)){
-                    //We check to see if the square is empty.
-                    list<Piece *>::iterator itr=jumpTo(x-2,y-2);
-                    //If it's empty, we can capture the red piece.
-                    if((*itr)->getPiece()=="   "){
-                        canCaptUprLeft=true;
-                    }
-                }
-            }
-        }
-        //If the upper right diagonal is a valid square:
-        if(isVldSquare(x-1,y+1)){
-            //We want to check to see if the piece is a red piece.
-            list<Piece *>::iterator uprRight=jumpTo(x-1,y+1);
-            //If it is a piece that we can possibly capture...
-            if((*uprRight)->getPiece()==" R "){
-                //We check to see if we can jump the piece.
-                //If the square past it is a valid square...
-                if(isVldSquare(x-2,y+2)){
-                    //We check to see if the square is empty.
-                    list<Piece *>::iterator itr=jumpTo(x-2,y+2);
-                    //If it's empty, we can capture the red piece.
-                    if((*itr)->getPiece()=="   "){
-                        canCaptUprRight=true;
-                    }
-                }
-            }
-        }
-        //We need to check the lower left and right diagonals.
-        //If the lower left diagonal is a valid square:
-        if(isVldSquare(x+1,y-1)){
-            //We want to check to see if the piece is a red piece.
-            list<Piece *>::iterator lwrLeft=jumpTo(x+1,y-1);
-            //If it is a piece that we can possibly capture...
-            if((*lwrLeft)->getPiece()==" R "){
-                //We check to see if we can jump the piece.
-                //If the square past it is a valid square...
-                if(isVldSquare(x+2,y-2)){
-                    //We check to see if the square is empty.
-                    list<Piece *>::iterator itr=jumpTo(x+2,y-2);
-                    //If it's empty, we can capture the black piece.
-                    if((*itr)->getPiece()=="   "){
-                        canCaptLwrLeft=true;
-                    }
-                }
-            }
-        }
-        //If the lower right diagonal is a valid square:
-        if(isVldSquare(x+1,y+1)){
-            //We want to check to see if the piece is a red piece.
-            list<Piece *>::iterator lwrRight=jumpTo(x+1,y+1);
-            //If it is a piece that we can possibly capture...
-            if((*lwrRight)->getPiece()==" R "){
-                //We check to see if we can jump the piece.
-                //If the square past it is a valid square...
-                if(isVldSquare(x+2,y+2)){
-                    //We check to see if the square is empty.
-                    list<Piece *>::iterator itr=jumpTo(x+2,y+2);
-                    //If it's empty, we can capture the black piece.
-                    if((*itr)->getPiece()=="   "){
-                        canCaptLwrRight=true;
-                    }
-                }
-            }
-        }
-    }
-    //If our piece is red...
-    else if(ourPiece==" R "){
-        //We need to check the upper left and right diagonals.
-        //If the upper left diagonal is a valid square:
-        if(isVldSquare(x-1,y-1)){
-            //We want to check to see if the piece is a black piece.
-            list<Piece *>::iterator uprLeft=jumpTo(x-1,y-1);
-            //If it is a piece that we can possibly capture...
-            if((*uprLeft)->getPiece()==" B "){
-                //We check to see if we can jump the piece.
-                //If the square past it is a valid square...
-                if(isVldSquare(x-2,y-2)){
-                    //We check to see if the square is empty.
-                    list<Piece *>::iterator itr=jumpTo(x-2,y-2);
-                    //If it's empty, we can capture the black piece.
-                    if((*itr)->getPiece()=="   "){
-                        canCaptUprLeft=true;
-                    }
-                }
-            }
-        }
-        //If the upper right diagonal is a valid square:
-        if(isVldSquare(x-1,y+1)){
-            //We want to check to see if the piece is a black piece.
-            list<Piece *>::iterator uprRight=jumpTo(x-1,y+1);
-            //If it is a piece that we can possibly capture...
-            if((*uprRight)->getPiece()==" B "){
-                //We check to see if we can jump the piece.
-                //If the square past it is a valid square...
-                if(isVldSquare(x-2,y+2)){
-                    //We check to see if the square is empty.
-                    list<Piece *>::iterator itr=jumpTo(x-2,y+2);
-                    //If it's empty, we can capture the black piece.
-                    if((*itr)->getPiece()=="   "){
-                        canCaptUprRight=true;
-                    }
-                }
-            }
-        }
-        //We need to check the lower left and right diagonals.
-        //If the lower left diagonal is a valid square:
-        if(isVldSquare(x+1,y-1)){
-            //We want to check to see if the piece is a black piece.
-            list<Piece *>::iterator lwrLeft=jumpTo(x+1,y-1);
-            //If it is a piece that we can possibly capture...
-            if((*lwrLeft)->getPiece()==" B "){
-                //We check to see if we can jump the piece.
-                //If the square past it is a valid square...
-                if(isVldSquare(x+2,y-2)){
-                    //We check to see if the square is empty.
-                    list<Piece *>::iterator itr=jumpTo(x+2,y-2);
-                    //If it's empty, we can capture the black piece.
-                    if((*itr)->getPiece()=="   "){
-                        canCaptLwrLeft=true;
-                    }
-                }
-            }
-        }
-        //If the lower right diagonal is a valid square:
-        if(isVldSquare(x+1,y+1)){
-            //We want to check to see if the piece is a black piece.
-            list<Piece *>::iterator lwrRight=jumpTo(x+1,y+1);
-            //If it is a piece that we can possibly capture...
-            if((*lwrRight)->getPiece()==" B "){
-                //We check to see if we can jump the piece.
-                //If the square past it is a valid square...
-                if(isVldSquare(x+2,y+2)){
-                    //We check to see if the square is empty.
-                    list<Piece *>::iterator itr=jumpTo(x+2,y+2);
-                    //If it's empty, we can capture the black piece.
-                    if((*itr)->getPiece()=="   "){
-                        canCaptLwrRight=true;
-                    }
-                }
-            }
-        }
-    }
-    //Returning whether we can capture at least 1 piece.
-    return canCaptUprLeft||canCaptUprRight||canCaptLwrLeft||canCaptLwrRight; 
-}
-
-/**To determine whether we can capture a piece or not. The first parameter is our piece.
  * The second parameter is the position of our piece. The third parameter is used to 
  * hold the position of a piece we can capture. The 4th parameter is used to hold 
  * whether we had the option to choose what piece to capture. If we were able to 
@@ -1253,179 +936,97 @@ bool Board::canCapture(string ourPiece,pair<int,int> pos,pair<int,int> &cap,bool
  * choose what piece to capture, the 4th parameter is set to true.
  */
 bool Board::canCaptWithKng(string ourPiece,pair<int,int> pos,pair<int,int> &cap,bool &chosen){
-    int x=pos.first;            //The row of our piece.
-    int y=pos.second;           //The col of our piece.
-    bool canCaptUprLeft=false;  //To hold whether we can capture from the upper left.
-    bool canCaptUprRight=false; //To hold whether we can capture from the upper right.
-    bool canCaptLwrLeft=false;  //To hold whether we can capture from the lower left.
-    bool canCaptLwrRight=false; //To hold whether we can capture from the lower right.
-    set<pair<int,int>> capPces; //To hold the positions of pieces we can capture.
-    //If our piece is black...
-    if(ourPiece==" B "){
-        //We need to check the upper left and right diagonals.
-        //If the upper left diagonal is a valid square:
-        if(isVldSquare(x-1,y-1)){
-            //We want to check to see if the piece is a red piece.
-            list<Piece *>::iterator uprLeft=jumpTo(x-1,y-1);
-            //If it is a piece that we can possibly capture...
-            if((*uprLeft)->getPiece()==" R "){
-                //We check to see if we can jump the piece.
-                //If the square past it is a valid square...
-                if(isVldSquare(x-2,y-2)){
-                    //We check to see if the square is empty.
-                    list<Piece *>::iterator itr=jumpTo(x-2,y-2);
-                    //If it's empty, we can capture the red piece.
-                    if((*itr)->getPiece()=="   "){
-                        canCaptUprLeft=true;
-                        //We store the position of the piece we can capture.
-                        capPces.insert((*uprLeft)->getPos());
-                    }
-                }
-            }
-        }
-        //If the upper right diagonal is a valid square:
-        if(isVldSquare(x-1,y+1)){
-            //We want to check to see if the piece is a red piece.
-            list<Piece *>::iterator uprRight=jumpTo(x-1,y+1);
-            //If it is a piece that we can possibly capture...
-            if((*uprRight)->getPiece()==" R "){
-                //We check to see if we can jump the piece.
-                //If the square past it is a valid square...
-                if(isVldSquare(x-2,y+2)){
-                    //We check to see if the square is empty.
-                    list<Piece *>::iterator itr=jumpTo(x-2,y+2);
-                    //If it's empty, we can capture the red piece.
-                    if((*itr)->getPiece()=="   "){
-                        canCaptUprRight=true;
-                        //We store the position of the piece we can capture.
-                        capPces.insert((*uprRight)->getPos());
-                    }
-                }
-            }
-        }
-        //We need to check the lower left and right diagonals.
-        //If the lower left diagonal is a valid square:
-        if(isVldSquare(x+1,y-1)){
-            //We want to check to see if the piece is a red piece.
-            list<Piece *>::iterator lwrLeft=jumpTo(x+1,y-1);
-            //If it is a piece that we can possibly capture...
-            if((*lwrLeft)->getPiece()==" R "){
-                //We check to see if we can jump the piece.
-                //If the square past it is a valid square...
-                if(isVldSquare(x+2,y-2)){
-                    //We check to see if the square is empty.
-                    list<Piece *>::iterator itr=jumpTo(x+2,y-2);
-                    //If it's empty, we can capture the black piece.
-                    if((*itr)->getPiece()=="   "){
-                        canCaptLwrLeft=true;
-                        //We store the position of the piece we can capture.
-                        capPces.insert((*lwrLeft)->getPos());
-                    }
-                }
-            }
-        }
-        //If the lower right diagonal is a valid square:
-        if(isVldSquare(x+1,y+1)){
-            //We want to check to see if the piece is a red piece.
-            list<Piece *>::iterator lwrRight=jumpTo(x+1,y+1);
-            //If it is a piece that we can possibly capture...
-            if((*lwrRight)->getPiece()==" R "){
-                //We check to see if we can jump the piece.
-                //If the square past it is a valid square...
-                if(isVldSquare(x+2,y+2)){
-                    //We check to see if the square is empty.
-                    list<Piece *>::iterator itr=jumpTo(x+2,y+2);
-                    //If it's empty, we can capture the black piece.
-                    if((*itr)->getPiece()=="   "){
-                        canCaptLwrRight=true;
-                        //We store the position of the piece we can capture.
-                        capPces.insert((*lwrRight)->getPos());
-                    }
+    int x=pos.first;  //The row of our piece.
+    int y=pos.second; //The column of our piece.
+    //To hold whether we can capture from the upper left.
+    bool canCaptUprLeft=false; 
+    //To hold whether we can capture from the upper right.
+    bool canCaptUprRight=false;
+    //To hold whether we can capture from the lower left.
+    bool canCaptLwrLeft=false;  
+    //To hold whether we can capture from the lower right.
+    bool canCaptLwrRight=false; 
+    //To hold the positions of pieces we can capture.
+    set<pair<int,int>> capPces;
+    //To hold our opponent's piece.
+    string opptPce=(ourPiece==" B "?" R ":" B ");
+    //We need to check all diagonals:
+    //If the upper left diagonal is a valid square:
+    if(isVldSquare(x-1,y-1)){
+        //We want to check to see if the piece is a red piece.
+        list<Piece *>::iterator uprLeft=jumpTo(x-1,y-1);
+        //If it is a piece that we can possibly capture...
+        if((*uprLeft)->getPiece()==opptPce){
+            //We check to see if we can jump the piece.
+            //If the square past it is a valid square...
+            if(isVldSquare(x-2,y-2)){
+                //We check to see if the square is empty.
+                list<Piece *>::iterator itr=jumpTo(x-2,y-2);
+                //If it's empty, we can capture the red piece.
+                if((*itr)->getPiece()=="   "){
+                    canCaptUprLeft=true;
+                    //We store the position of the piece we can capture.
+                    capPces.insert((*uprLeft)->getPos());
                 }
             }
         }
     }
-    //If our piece is red...
-    else if(ourPiece==" R "){
-        //We need to check the upper left and right diagonals.
-        //If the upper left diagonal is a valid square:
-        if(isVldSquare(x-1,y-1)){
-            //We want to check to see if the piece is a black piece.
-            list<Piece *>::iterator uprLeft=jumpTo(x-1,y-1);
-            //If it is a piece that we can possibly capture...
-            if((*uprLeft)->getPiece()==" B "){
-                //We check to see if we can jump the piece.
-                //If the square past it is a valid square...
-                if(isVldSquare(x-2,y-2)){
-                    //We check to see if the square is empty.
-                    list<Piece *>::iterator itr=jumpTo(x-2,y-2);
-                    //If it's empty, we can capture the black piece.
-                    if((*itr)->getPiece()=="   "){
-                        canCaptUprLeft=true;
-                        //We store the position of the piece we can capture.
-                        capPces.insert((*uprLeft)->getPos());
-                    }
+    //If the upper right diagonal is a valid square:
+    if(isVldSquare(x-1,y+1)){
+        //We want to check to see if the piece is a red piece.
+        list<Piece *>::iterator uprRight=jumpTo(x-1,y+1);
+        //If it is a piece that we can possibly capture...
+        if((*uprRight)->getPiece()==opptPce){
+            //We check to see if we can jump the piece.
+            //If the square past it is a valid square...
+            if(isVldSquare(x-2,y+2)){
+                //We check to see if the square is empty.
+                list<Piece *>::iterator itr=jumpTo(x-2,y+2);
+                //If it's empty, we can capture the red piece.
+                if((*itr)->getPiece()=="   "){
+                    canCaptUprRight=true;
+                    //We store the position of the piece we can capture.
+                    capPces.insert((*uprRight)->getPos());
                 }
             }
         }
-        //If the upper right diagonal is a valid square:
-        if(isVldSquare(x-1,y+1)){
-            //We want to check to see if the piece is a black piece.
-            list<Piece *>::iterator uprRight=jumpTo(x-1,y+1);
-            //If it is a piece that we can possibly capture...
-            if((*uprRight)->getPiece()==" B "){
-                //We check to see if we can jump the piece.
-                //If the square past it is a valid square...
-                if(isVldSquare(x-2,y+2)){
-                    //We check to see if the square is empty.
-                    list<Piece *>::iterator itr=jumpTo(x-2,y+2);
-                    //If it's empty, we can capture the black piece.
-                    if((*itr)->getPiece()=="   "){
-                        canCaptUprRight=true;
-                        //We store the position of the piece we can capture.
-                        capPces.insert((*uprRight)->getPos());
-                    }
+    }
+    //If the lower left diagonal is a valid square:
+    if(isVldSquare(x+1,y-1)){
+        //We want to check to see if the piece is a red piece.
+        list<Piece *>::iterator lwrLeft=jumpTo(x+1,y-1);
+        //If it is a piece that we can possibly capture...
+        if((*lwrLeft)->getPiece()==opptPce){
+            //We check to see if we can jump the piece.
+            //If the square past it is a valid square...
+            if(isVldSquare(x+2,y-2)){
+                //We check to see if the square is empty.
+                list<Piece *>::iterator itr=jumpTo(x+2,y-2);
+                //If it's empty, we can capture the black piece.
+                if((*itr)->getPiece()=="   "){
+                    canCaptLwrLeft=true;
+                    //We store the position of the piece we can capture.
+                    capPces.insert((*lwrLeft)->getPos());
                 }
             }
         }
-        //We need to check the lower left and right diagonals.
-        //If the lower left diagonal is a valid square:
-        if(isVldSquare(x+1,y-1)){
-            //We want to check to see if the piece is a black piece.
-            list<Piece *>::iterator lwrLeft=jumpTo(x+1,y-1);
-            //If it is a piece that we can possibly capture...
-            if((*lwrLeft)->getPiece()==" B "){
-                //We check to see if we can jump the piece.
-                //If the square past it is a valid square...
-                if(isVldSquare(x+2,y-2)){
-                    //We check to see if the square is empty.
-                    list<Piece *>::iterator itr=jumpTo(x+2,y-2);
-                    //If it's empty, we can capture the black piece.
-                    if((*itr)->getPiece()=="   "){
-                        canCaptLwrLeft=true;
-                        //We store the position of the piece we can capture.
-                        capPces.insert((*lwrLeft)->getPos());
-                    }
-                }
-            }
-        }
-        //If the lower right diagonal is a valid square:
-        if(isVldSquare(x+1,y+1)){
-            //We want to check to see if the piece is a black piece.
-            list<Piece *>::iterator lwrRight=jumpTo(x+1,y+1);
-            //If it is a piece that we can possibly capture...
-            if((*lwrRight)->getPiece()==" B "){
-                //We check to see if we can jump the piece.
-                //If the square past it is a valid square...
-                if(isVldSquare(x+2,y+2)){
-                    //We check to see if the square is empty.
-                    list<Piece *>::iterator itr=jumpTo(x+2,y+2);
-                    //If it's empty, we can capture the black piece.
-                    if((*itr)->getPiece()=="   "){
-                        canCaptLwrRight=true;
-                        //We store the position of the piece we can capture.
-                        capPces.insert((*lwrRight)->getPos());
-                    }
+    }
+    //If the lower right diagonal is a valid square:
+    if(isVldSquare(x+1,y+1)){
+        //We want to check to see if the piece is a red piece.
+        list<Piece *>::iterator lwrRight=jumpTo(x+1,y+1);
+        //If it is a piece that we can possibly capture...
+        if((*lwrRight)->getPiece()==opptPce){
+            //We check to see if we can jump the piece.
+            //If the square past it is a valid square...
+            if(isVldSquare(x+2,y+2)){
+                //We check to see if the square is empty.
+                list<Piece *>::iterator itr=jumpTo(x+2,y+2);
+                //If it's empty, we can capture the black piece.
+                if((*itr)->getPiece()=="   "){
+                    canCaptLwrRight=true;
+                    //We store the position of the piece we can capture.
+                    capPces.insert((*lwrRight)->getPos());
                 }
             }
         }
