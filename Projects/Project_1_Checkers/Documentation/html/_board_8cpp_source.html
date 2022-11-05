@@ -508,30 +508,30 @@ $(document).ready(function(){initNavTree('_board_8cpp_source.html',''); initResi
 <div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;                            cout&lt;&lt;<span class="stringliteral">&quot;That is an invalid square!\n&quot;</span>;</div>
 <div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;                        <span class="keywordflow">else</span>{</div>
 <div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;                            <span class="keywordflow">while</span>(x2!=capPos.first-1&amp;&amp;x2!=capPos.first+1||(y2!=capPos.second-1&amp;&amp;y2!=capPos.second+1)){</div>
-<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;                                    <span class="comment">//If we have already chosen what piece to capture...</span></div>
-<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;                                    <span class="keywordflow">if</span>(chosen){</div>
-<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;                                        cout&lt;&lt;<span class="stringliteral">&quot;\nYou have already chosen what piece to capture.&quot;</span>&lt;&lt;endl;</div>
-<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;                                        cout&lt;&lt;<span class="stringliteral">&quot;Make sure you jump into the square that&#39;s after&quot;</span>&lt;&lt;endl;</div>
-<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;                                        cout&lt;&lt;<span class="stringliteral">&quot;the piece you chose to capture...&quot;</span>&lt;&lt;endl;</div>
-<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;                                    }</div>
-<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;                                    <span class="comment">//If we didn&#39;t choose what piece to capture...</span></div>
-<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;                                    <span class="keywordflow">else</span>{</div>
-<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;                                        <span class="comment">//We output a message and reprompt the user.</span></div>
-<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;                                        cout&lt;&lt;<span class="stringliteral">&quot;\nYou have to jump into the square after the piece \n&quot;</span>;</div>
-<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;                                        cout&lt;&lt;<span class="stringliteral">&quot;you&#39;ll be capturing. The square must be valid. \n&quot;</span>;         </div>
-<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;                                    }</div>
-<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;                                    cout&lt;&lt;<span class="stringliteral">&quot;Where would you like to move your piece? (Row Column)\n&quot;</span>;</div>
-<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;                                    cin&gt;&gt;x2&gt;&gt;y2;</div>
-<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;                                }</div>
-<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;                        }</div>
-<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;                        <span class="comment">//We jump to the square on our board that we chose.</span></div>
-<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;                        itr=<a class="code" href="class_board.html#a1f1af876c47f8a6276097cbff2c5ca27">jumpTo</a>(x2,y2);</div>
-<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;                        <span class="comment">//If it is not empty, we have to choose another square.</span></div>
-<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;                        <span class="keywordflow">if</span>((*itr)-&gt;getPiece()!=<span class="stringliteral">&quot;   &quot;</span>){</div>
-<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;                            cout&lt;&lt;<span class="stringliteral">&quot;Choose a different square...&quot;</span>&lt;&lt;endl;</div>
-<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;                            <span class="comment">//We reset our coordinates, in order to choose a different square.</span></div>
-<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;                            x2=0;</div>
-<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;                            y2=0;</div>
+<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;                                <span class="comment">//If we have already chosen what piece to capture...</span></div>
+<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;                                <span class="keywordflow">if</span>(chosen){</div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;                                    cout&lt;&lt;<span class="stringliteral">&quot;\nYou have already chosen what piece to capture.&quot;</span>&lt;&lt;endl;</div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;                                    cout&lt;&lt;<span class="stringliteral">&quot;Make sure you jump into the square that&#39;s after&quot;</span>&lt;&lt;endl;</div>
+<div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;                                    cout&lt;&lt;<span class="stringliteral">&quot;the piece you chose to capture...&quot;</span>&lt;&lt;endl;</div>
+<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;                                }</div>
+<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;                                <span class="comment">//If we didn&#39;t choose what piece to capture...</span></div>
+<div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;                                <span class="keywordflow">else</span>{</div>
+<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;                                    <span class="comment">//We output a message and reprompt the user.</span></div>
+<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;                                    cout&lt;&lt;<span class="stringliteral">&quot;\nYou have to jump into the square after the piece \n&quot;</span>;</div>
+<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;                                    cout&lt;&lt;<span class="stringliteral">&quot;you&#39;ll be capturing. The square must be valid. \n&quot;</span>;         </div>
+<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;                                }</div>
+<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;                                cout&lt;&lt;<span class="stringliteral">&quot;Where would you like to move your piece? (Row Column)\n&quot;</span>;</div>
+<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;                                cin&gt;&gt;x2&gt;&gt;y2;</div>
+<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;                            }</div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;                            <span class="comment">//We jump to the square on our board that we chose.</span></div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;                            itr=<a class="code" href="class_board.html#a1f1af876c47f8a6276097cbff2c5ca27">jumpTo</a>(x2,y2);</div>
+<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;                            <span class="comment">//If it is not empty, we have to choose another square.</span></div>
+<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;                            <span class="keywordflow">if</span>((*itr)-&gt;getPiece()!=<span class="stringliteral">&quot;   &quot;</span>){</div>
+<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;                                cout&lt;&lt;<span class="stringliteral">&quot;Choose a different square...&quot;</span>&lt;&lt;endl;</div>
+<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;                                <span class="comment">//We reset our coordinates, in order to choose a different square.</span></div>
+<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;                                x2=0;</div>
+<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;                                y2=0;</div>
+<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;                            }</div>
 <div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;                        }</div>
 <div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;                    }</div>
 <div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;                    <span class="comment">//Now that we have a valid square to jump to after capturing a piece...</span></div>
@@ -628,15 +628,15 @@ $(document).ready(function(){initNavTree('_board_8cpp_source.html',''); initResi
 <div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;                                    cout&lt;&lt;<span class="stringliteral">&quot;Where would you like to move your piece? (Row Column)\n&quot;</span>;</div>
 <div class="line"><a name="l00553"></a><span class="lineno">  553</span>&#160;                                    cin&gt;&gt;x2&gt;&gt;y2;</div>
 <div class="line"><a name="l00554"></a><span class="lineno">  554</span>&#160;                                }</div>
-<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;                            }</div>
-<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;                            <span class="comment">//We jump to where we&#39;d like to move our piece.</span></div>
-<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;                            itr=<a class="code" href="class_board.html#a1f1af876c47f8a6276097cbff2c5ca27">jumpTo</a>(x2,y2);</div>
-<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;                            <span class="comment">//If it is not empty, we have to choose another square.</span></div>
-<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;                            <span class="keywordflow">if</span>((*itr)-&gt;getPiece()!=<span class="stringliteral">&quot;   &quot;</span>){</div>
-<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160;                                cout&lt;&lt;<span class="stringliteral">&quot;Choose a different square...&quot;</span>&lt;&lt;endl;</div>
-<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;                                <span class="comment">//We reset our coordinates, in order to choose a different square.</span></div>
-<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160;                                x2=0;</div>
-<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;                                y2=0;</div>
+<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;                                <span class="comment">//We jump to where we&#39;d like to move our piece.</span></div>
+<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;                                itr=<a class="code" href="class_board.html#a1f1af876c47f8a6276097cbff2c5ca27">jumpTo</a>(x2,y2);</div>
+<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;                                <span class="comment">//If it is not empty, we have to choose another square.</span></div>
+<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;                                <span class="keywordflow">if</span>((*itr)-&gt;getPiece()!=<span class="stringliteral">&quot;   &quot;</span>){</div>
+<div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160;                                    cout&lt;&lt;<span class="stringliteral">&quot;Choose a different square...&quot;</span>&lt;&lt;endl;</div>
+<div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160;                                    <span class="comment">//We reset our coordinates, in order to choose a different square.</span></div>
+<div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160;                                    x2=0;</div>
+<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160;                                    y2=0;</div>
+<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;                                }</div>
 <div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;                            }</div>
 <div class="line"><a name="l00565"></a><span class="lineno">  565</span>&#160;                        }</div>
 <div class="line"><a name="l00566"></a><span class="lineno">  566</span>&#160;                        <span class="comment">//If we have a black piece...</span></div>
@@ -663,15 +663,15 @@ $(document).ready(function(){initNavTree('_board_8cpp_source.html',''); initResi
 <div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;                                    cout&lt;&lt;<span class="stringliteral">&quot;Where would you like to move your piece? (Row Column)\n&quot;</span>;</div>
 <div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160;                                    cin&gt;&gt;x2&gt;&gt;y2;</div>
 <div class="line"><a name="l00589"></a><span class="lineno">  589</span>&#160;                                }</div>
-<div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160;                            }</div>
-<div class="line"><a name="l00591"></a><span class="lineno">  591</span>&#160;                            <span class="comment">//We jump to where we&#39;d like to move our piece.</span></div>
-<div class="line"><a name="l00592"></a><span class="lineno">  592</span>&#160;                            itr=<a class="code" href="class_board.html#a1f1af876c47f8a6276097cbff2c5ca27">jumpTo</a>(x2,y2);</div>
-<div class="line"><a name="l00593"></a><span class="lineno">  593</span>&#160;                            <span class="comment">//If it is not empty, we have to choose another square.</span></div>
-<div class="line"><a name="l00594"></a><span class="lineno">  594</span>&#160;                            <span class="keywordflow">if</span>((*itr)-&gt;getPiece()!=<span class="stringliteral">&quot;   &quot;</span>){</div>
-<div class="line"><a name="l00595"></a><span class="lineno">  595</span>&#160;                                cout&lt;&lt;<span class="stringliteral">&quot;Choose a different square...&quot;</span>&lt;&lt;endl;</div>
-<div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160;                                <span class="comment">//We reset our coordinates, in order to choose a different square.</span></div>
-<div class="line"><a name="l00597"></a><span class="lineno">  597</span>&#160;                                x2=0;</div>
-<div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160;                                y2=0;</div>
+<div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160;                                <span class="comment">//We jump to where we&#39;d like to move our piece.</span></div>
+<div class="line"><a name="l00591"></a><span class="lineno">  591</span>&#160;                                itr=<a class="code" href="class_board.html#a1f1af876c47f8a6276097cbff2c5ca27">jumpTo</a>(x2,y2);</div>
+<div class="line"><a name="l00592"></a><span class="lineno">  592</span>&#160;                                <span class="comment">//If it is not empty, we have to choose another square.</span></div>
+<div class="line"><a name="l00593"></a><span class="lineno">  593</span>&#160;                                <span class="keywordflow">if</span>((*itr)-&gt;getPiece()!=<span class="stringliteral">&quot;   &quot;</span>){</div>
+<div class="line"><a name="l00594"></a><span class="lineno">  594</span>&#160;                                    cout&lt;&lt;<span class="stringliteral">&quot;Choose a different square...&quot;</span>&lt;&lt;endl;</div>
+<div class="line"><a name="l00595"></a><span class="lineno">  595</span>&#160;                                    <span class="comment">//We reset our coordinates, in order to choose a different square.</span></div>
+<div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160;                                    x2=0;</div>
+<div class="line"><a name="l00597"></a><span class="lineno">  597</span>&#160;                                    y2=0;</div>
+<div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160;                                }</div>
 <div class="line"><a name="l00599"></a><span class="lineno">  599</span>&#160;                            }</div>
 <div class="line"><a name="l00600"></a><span class="lineno">  600</span>&#160;                        }</div>
 <div class="line"><a name="l00601"></a><span class="lineno">  601</span>&#160;                    }</div>

@@ -432,30 +432,30 @@ void Board::move(string ourPiece,map<string,int> &captPces){
                             cout<<"That is an invalid square!\n";
                         else{
                             while(x2!=capPos.first-1&&x2!=capPos.first+1||(y2!=capPos.second-1&&y2!=capPos.second+1)){
-                                    //If we have already chosen what piece to capture...
-                                    if(chosen){
-                                        cout<<"\nYou have already chosen what piece to capture."<<endl;
-                                        cout<<"Make sure you jump into the square that's after"<<endl;
-                                        cout<<"the piece you chose to capture..."<<endl;
-                                    }
-                                    //If we didn't choose what piece to capture...
-                                    else{
-                                        //We output a message and reprompt the user.
-                                        cout<<"\nYou have to jump into the square after the piece \n";
-                                        cout<<"you'll be capturing. The square must be valid. \n";         
-                                    }
-                                    cout<<"Where would you like to move your piece? (Row Column)\n";
-                                    cin>>x2>>y2;
+                                //If we have already chosen what piece to capture...
+                                if(chosen){
+                                    cout<<"\nYou have already chosen what piece to capture."<<endl;
+                                    cout<<"Make sure you jump into the square that's after"<<endl;
+                                    cout<<"the piece you chose to capture..."<<endl;
                                 }
-                        }
-                        //We jump to the square on our board that we chose.
-                        itr=jumpTo(x2,y2);
-                        //If it is not empty, we have to choose another square.
-                        if((*itr)->getPiece()!="   "){
-                            cout<<"Choose a different square..."<<endl;
-                            //We reset our coordinates, in order to choose a different square.
-                            x2=0;
-                            y2=0;
+                                //If we didn't choose what piece to capture...
+                                else{
+                                    //We output a message and reprompt the user.
+                                    cout<<"\nYou have to jump into the square after the piece \n";
+                                    cout<<"you'll be capturing. The square must be valid. \n";         
+                                }
+                                cout<<"Where would you like to move your piece? (Row Column)\n";
+                                cin>>x2>>y2;
+                            }
+                            //We jump to the square on our board that we chose.
+                            itr=jumpTo(x2,y2);
+                            //If it is not empty, we have to choose another square.
+                            if((*itr)->getPiece()!="   "){
+                                cout<<"Choose a different square..."<<endl;
+                                //We reset our coordinates, in order to choose a different square.
+                                x2=0;
+                                y2=0;
+                            }
                         }
                     }
                     //Now that we have a valid square to jump to after capturing a piece...
@@ -552,15 +552,15 @@ void Board::move(string ourPiece,map<string,int> &captPces){
                                     cout<<"Where would you like to move your piece? (Row Column)\n";
                                     cin>>x2>>y2;
                                 }
-                            }
-                            //We jump to where we'd like to move our piece.
-                            itr=jumpTo(x2,y2);
-                            //If it is not empty, we have to choose another square.
-                            if((*itr)->getPiece()!="   "){
-                                cout<<"Choose a different square..."<<endl;
-                                //We reset our coordinates, in order to choose a different square.
-                                x2=0;
-                                y2=0;
+                                //We jump to where we'd like to move our piece.
+                                itr=jumpTo(x2,y2);
+                                //If it is not empty, we have to choose another square.
+                                if((*itr)->getPiece()!="   "){
+                                    cout<<"Choose a different square..."<<endl;
+                                    //We reset our coordinates, in order to choose a different square.
+                                    x2=0;
+                                    y2=0;
+                                }
                             }
                         }
                         //If we have a black piece...
@@ -587,15 +587,15 @@ void Board::move(string ourPiece,map<string,int> &captPces){
                                     cout<<"Where would you like to move your piece? (Row Column)\n";
                                     cin>>x2>>y2;
                                 }
-                            }
-                            //We jump to where we'd like to move our piece.
-                            itr=jumpTo(x2,y2);
-                            //If it is not empty, we have to choose another square.
-                            if((*itr)->getPiece()!="   "){
-                                cout<<"Choose a different square..."<<endl;
-                                //We reset our coordinates, in order to choose a different square.
-                                x2=0;
-                                y2=0;
+                                //We jump to where we'd like to move our piece.
+                                itr=jumpTo(x2,y2);
+                                //If it is not empty, we have to choose another square.
+                                if((*itr)->getPiece()!="   "){
+                                    cout<<"Choose a different square..."<<endl;
+                                    //We reset our coordinates, in order to choose a different square.
+                                    x2=0;
+                                    y2=0;
+                                }
                             }
                         }
                     }
